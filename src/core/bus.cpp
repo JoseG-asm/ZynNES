@@ -1,12 +1,8 @@
 #include "bus.h"
 
-static int test_pointer = 10;
+#include "core/cpu.h"
 
 ZynNes::Core::Bus::Bus() {
-    attachDevice(&test_pointer, 0);
-
-    std::cout << &test_pointer << std::endl;
-    std::cout << getDevice<int>(0) << std::endl;
 }
 
 template<typename T>
@@ -28,18 +24,14 @@ T* ZynNes::Core::Bus::getDevice(std::size_t idx) {
     return std::any_cast<T*>(it->second);
 }
 
+// explicit instantiation of cpu case
+template void ZynNes::Core::Bus::attachDevice<ZynNes::Core::Cpu>(Cpu*, std::size_t);
+template ZynNes::Core::Cpu* ZynNes::Core::Bus::getDevice<ZynNes::Core::Cpu>(std::size_t);
+
 ZynNes::Core::u8 ZynNes::Core::Bus::read(u16 addr) {
-    std::integral auto _addr = addr;
-
-    if (addr >= 0x0000 && addr <= 0xFFFF) {
-        return m_ram[addr];
-    }
-
-    return 0x00;
+    return m_ram[addr];
 }
 
 void ZynNes::Core::Bus::write(u16 addr, u8 data) {
-    if (addr >= 0x0000 && addr <= 0xFFFF) {
-        m_ram[addr] = data;
-    }
+    m_ram[addr] = data;
 }

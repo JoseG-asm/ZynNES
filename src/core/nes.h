@@ -12,6 +12,7 @@
 // forward declarations
 namespace ZynNes::Core {
     class Bus;
+    class Cpu;
 }
 
 namespace ZynNes::Core {
@@ -24,9 +25,11 @@ namespace ZynNes::Core {
     class Nes {
     public:
         Nes();
+        ~Nes();
 
         void run();
     private:
         std::unique_ptr<Bus> m_bus;
+        std::unique_ptr<Cpu> m_cpu;
     };
 }

@@ -9,6 +9,8 @@ set(SOURCES
         src/core/nes.h
         src/core/bus.cpp
         src/core/bus.h
+        src/core/cpu.cpp
+        src/core/cpu.h
 )
 
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
